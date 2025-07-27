@@ -39,52 +39,6 @@ jobs:
           mkdir -p _site
           cp -r temp-repo/cht/* _site/
 
-      - name: Create index.html
-        run: |
-          cat > _site/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>CHT Files - Cheat Codes Database</title>
-              <style>
-                  body { font-family: Arial, sans-serif; margin: 40px; }
-                  h1 { color: #333; }
-                  .file-list { list-style-type: none; padding: 0; }
-                  .file-list li { margin: 10px 0; }
-                  .file-list a { text-decoration: none; color: #0066cc; }
-                  .file-list a:hover { text-decoration: underline; }
-                  .description { color: #666; margin-bottom: 30px; }
-              </style>
-          </head>
-          <body>
-              <h1>CHT Files - Cheat Codes Database</h1>
-              <p class="description">
-                  This site hosts cheat code files from the libretro-database repository.
-                  These files contain cheat codes for various games and systems.
-              </p>
-              <h2>Available CHT Files:</h2>
-              <ul class="file-list">
-          EOF
-          
-          # Add all .cht files to the index
-          find _site -name "*.cht" -type f | sort | while read file; do
-              filename=$(basename "$file")
-              echo "                  <li><a href=\"$filename\">$filename</a></li>" >> _site/index.html
-          done
-          
-          cat >> _site/index.html << 'EOF'
-              </ul>
-              <hr>
-              <p><small>
-                  Source: <a href="https://github.com/libretro/libretro-database/tree/master/cht">libretro/libretro-database</a><br>
-                  Last updated: $(date)
-              </small></p>
-          </body>
-          </html>
-          EOF
-
       - name: Clean up
         run: rm -rf temp-repo
 
